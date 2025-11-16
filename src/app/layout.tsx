@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Montserrat } from "next/font/google"
+import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
+import PathnameWrapper from "./pathname-wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +17,7 @@ const geistMono = Geist_Mono({
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-})
+});
 
 export const metadata: Metadata = {
   title: "Dennis Magaki",
@@ -32,7 +34,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
       >
-        {children}
+        <Navbar />
+        <PathnameWrapper>{children}</PathnameWrapper>
       </body>
     </html>
   );
