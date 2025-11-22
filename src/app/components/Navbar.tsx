@@ -11,12 +11,11 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navLinks = [
-    { label: "About", href: "/about" },
-    { label: "Experience", href: "/experience" },
-    { label: "Work", href: "/work" },
-    { label: "Clients", href: "/clients" },
-    { label: "Testimonials", href: "/testimonials" },
-    { label: "Contact", href: "/contact" },
+    { label: "About", href: "#about" },
+    { label: "Tech Stack", href: "#stack" },
+    { label: "Experience", href: "#experience" },
+    { label: "Projects", href: "#work" },
+    { label: "Contact", href: "#contact" },
     { label: "Blog", href: "/blog" },
     { label: "Games", href: "/games" },
   ];
@@ -31,8 +30,8 @@ export default function Navbar() {
   if (pathname === "/") return null;
 
   // Split links into main and extra for separator
-  const mainLinks = navLinks.slice(0, 6);
-  const extraLinks = navLinks.slice(6);
+  const mainLinks = navLinks.slice(0, 5);
+  const extraLinks = navLinks.slice(5);
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-[#000000]/20 text-[#ffffff] z-100 backdrop-blur-xl">

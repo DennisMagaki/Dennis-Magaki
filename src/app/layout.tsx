@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import PathnameWrapper from "./pathname-wrapper";
 
 const geistSans = Geist({
@@ -36,6 +37,7 @@ export default function RootLayout({
       >
         <Navbar />
         <PathnameWrapper>{children}</PathnameWrapper>
+        <Footer />
       </body>
     </html>
   );
