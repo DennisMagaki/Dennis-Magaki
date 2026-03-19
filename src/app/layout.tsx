@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PathnameWrapper from "./pathname-wrapper";
+import { Toaster } from "react-hot-toast"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
       >
         <Navbar />
-        <PathnameWrapper>{children}</PathnameWrapper>
+        <PathnameWrapper>{children}
+          <Toaster position="bottom-right" />
+        </PathnameWrapper>
         <Footer />
       </body>
     </html>

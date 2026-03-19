@@ -4,7 +4,7 @@ export default function Experience() {
   const schoolData = [
     {
       institution: "Zetech University",
-      achievement: "Bachelor’s Degree in Business Information Technology",
+      achievement: "Bachelor's Degree in Business Information Technology",
       period: "September 2022 — November 2025",
     },
     {

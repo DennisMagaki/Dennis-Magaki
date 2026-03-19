@@ -13,26 +13,38 @@ export default function About() {
         transition={{ duration: 1 }}
       >
         <h1 className="text-4xl md:text-6xl font-bold mb-6">About Me</h1>
-        <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+        <p className="text-sm md:text-lg text-gray-300 leading-relaxed">
           Hi, I am{" "}
           <span className="text-blue-400 font-semibold">Dennis Magaki</span>, a
-          software developer based in Nairobi, Kenya. I am a passionate
-          front-end developer, aspiring to become a full-stack developer. With
-          experience building engaging web applications, I constantly seek to
-          learn new technologies and enhance my craft.
+          software developer based in Kiserian, Kajiado, Kenya. I specialize in front-end
+          development, with a strong passion for building clean, responsive, and
+          user-focused web applications. <br /><br />I enjoy turning ideas into interactive
+          digital experiences that are not only visually appealing but also
+          performant and intuitive. Over time, I&apos;ve gained hands-on
+          experience working with modern web technologies, crafting interfaces
+          that prioritize usability, accessibility, and seamless user
+          interaction. <br /><br />I pay close attention to detail, from layout and
+          responsiveness to subtle animations that enhance the overall
+          experience. <br /><br />Beyond front-end development, I&apos;m actively expanding
+          my skills toward full-stack development. I&apos;ve been working with
+          backend technologies, databases, and APIs, aiming to build complete,
+          scalable systems end-to-end. <br /><br />Whether it&apos;s improving
+          performance, refining UI/UX, or implementing new features, I&apos;m
+          always focused on writing clean, maintainable code and delivering
+          high-quality work.
         </p>
       </motion.div>
 
-      <div className="relative w-full md:w-1/2 h-64 md:h-full">
+      <div className="relative w-full md:w-1/2 h-48 md:h-full">
         <Image
-          src="/images/hero.jpeg"
+          src="/images/hero2.jpeg"
           alt="Dennis Magaki"
           fill
-          className="object-cover object-center brightness-90"
+          className="object-cover object-center"
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
       </div>
     </section>
   );

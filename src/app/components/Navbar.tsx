@@ -11,11 +11,11 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navLinks = [
-    { label: "About", href: "#about" },
-    { label: "Tech Stack", href: "#stack" },
-    { label: "Experience", href: "#experience" },
-    { label: "Projects", href: "#work" },
-    { label: "Contact", href: "#contact" },
+    { label: "About", href: "/home#about" },
+    { label: "Tech Stack", href: "/home#stack" },
+    { label: "Experience", href: "/home#experience" },
+    { label: "Projects", href: "/home#work" },
+    { label: "Contact", href: "/home#contact" },
     { label: "Blog", href: "/blog" },
     { label: "Games", href: "/games" },
   ];
