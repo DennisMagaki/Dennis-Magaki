@@ -104,7 +104,6 @@ export default function Work() {
           </div>
         </div>
       ))}
-      <a target="_blank" href="https://livetrafficfeed.com/live/dennis-magaki.is-a.dev"><Image src="//livetrafficfeed.com/static/imgv2/feed.png?d=dennis-magaki.is-a.dev&c=74f663f08fcac788d311135117df55fa&w=240&h=10&bg=ffffff&ht=2853a8&b=2853a8&t=000000&r=7413124" alt="live traffic feed"/></a>
-    </section>
+     </section>
   );
 }
