@@ -25,7 +25,8 @@ function UmamiTracker() {
 
   useEffect(() => {
     if ((window as any).umami) {
-      (window as any).umami.track() // SPA pageview
+      // Automatically sends POST with full payload
+      ;(window as any).umami.track()
     }
   }, [pathname])
 
