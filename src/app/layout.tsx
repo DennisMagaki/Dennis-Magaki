@@ -6,7 +6,6 @@ import Footer from "./components/Footer";
 import PathnameWrapper from "./pathname-wrapper";
 import { Toaster } from "react-hot-toast";
 import Script from "next/script";
-import UmamiTracker from "./components/UmamiTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,10 +46,9 @@ export default function RootLayout({
         <Script
           src="https://cloud.umami.is/script.js"
           data-website-id="db1dd232-3950-4f3f-9242-20fd47935f78"
-          data-auto-track="false"
+          data-auto-track="true"
           strategy="afterInteractive"
         />
-        <UmamiTracker />
       </body>
     </html>
   );
