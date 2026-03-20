@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
-import Script from 'next/script'
+import { useEffect, useState } from "react"
 
+// --------------------
 // Types
+// --------------------
 type Stats = {
   visitors: number
   pageviews: number
@@ -15,22 +15,6 @@ type Stats = {
 type ChartItem = {
   x: string
   y: number
-}
-
-// --------------------
-// SPA Tracker Component
-// --------------------
-function UmamiTracker() {
-  const pathname = usePathname()
-
-  useEffect(() => {
-    if ((window as any).umami) {
-      // Automatically sends POST with full payload
-      ;(window as any).umami.track()
-    }
-  }, [pathname])
-
-  return null
 }
 
 // --------------------
@@ -46,7 +30,7 @@ function Card({ title, value }: { title: string; value: any }) {
 }
 
 // --------------------
-// Main Analytics Dashboard
+// Main Dashboard
 // --------------------
 export default function AnalyticsDashboard() {
   const [stats, setStats] = useState<Stats | null>(null)
@@ -54,16 +38,15 @@ export default function AnalyticsDashboard() {
   const [devices, setDevices] = useState<ChartItem[]>([])
   const [loading, setLoading] = useState(true)
 
-  // Fetch data from API
   const fetchData = async () => {
     try {
       const [statsRes, countriesRes, devicesRes] = await Promise.all([
-        fetch('/api/umami/stats'),
-        fetch('/api/umami/countries'),
-        fetch('/api/umami/devices'),
+        fetch("/api/umami/stats"),
+        fetch("/api/umami/countries"),
+        fetch("/api/umami/devices"),
       ])
 
-      const statsData: Stats = await statsRes.json()
+      const statsData = await statsRes.json()
       const countriesData = await countriesRes.json()
       const devicesData = await devicesRes.json()
 
@@ -71,38 +54,32 @@ export default function AnalyticsDashboard() {
       setCountries(countriesData?.data || [])
       setDevices(devicesData?.data || [])
     } catch (err) {
-      console.error('Failed to load analytics', err)
+      console.error("Failed to load analytics", err)
     } finally {
       setLoading(false)
     }
   }
 
-  // Initial fetch + polling
   useEffect(() => {
     fetchData()
-    const interval = setInterval(fetchData, 10000) // 10s polling
+    const interval = setInterval(fetchData, 15000) // 15s polling
     return () => clearInterval(interval)
   }, [])
 
-  if (loading)
-    return <div className="p-6 text-white font-semibold">Loading analytics...</div>
+  if (loading) {
+    return (
+      <div className="p-10 text-white font-semibold">
+        Loading analytics...
+      </div>
+    )
+  }
 
   return (
-    <div className="p-10 bg-black text-white min-h-screen font-montserrat mt-20">
-      {/* Umami Script */}
-      <Script
-        src="https://cloud.umami.is/script.js"
-        data-website-id="db1dd232-3950-4f3f-9242-20fd47935f78"
-        data-auto-track="true"
-        strategy="afterInteractive"
-      />
-      <UmamiTracker />
-
-      {/* Title */}
-      <h1 className="text-3xl font-bold mb-8">Analytics Dashboard</h1>
+    <div className="p-10 bg-black text-white min-h-screen font-montserrat">
+      <h1 className="text-3xl font-bold mb-10">Analytics Dashboard</h1>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
         <Card title="Visitors" value={stats?.visitors ?? 0} />
         <Card title="Pageviews" value={stats?.pageviews ?? 0} />
         <Card
@@ -112,13 +89,14 @@ export default function AnalyticsDashboard() {
         <Card title="Avg Time" value={`${stats?.avgTime ?? 0}s`} />
       </div>
 
-      {/* Countries & Devices */}
+      {/* Data Sections */}
       <div className="grid md:grid-cols-2 gap-8">
         {/* Countries */}
         <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-6">
           <h2 className="text-lg font-semibold text-blue-400 mb-4">
             Top Countries
           </h2>
+
           {countries.length === 0 ? (
             <p className="text-gray-400">No data yet</p>
           ) : (
@@ -141,6 +119,7 @@ export default function AnalyticsDashboard() {
           <h2 className="text-lg font-semibold text-purple-400 mb-4">
             Devices / Browsers
           </h2>
+
           {devices.length === 0 ? (
             <p className="text-gray-400">No data yet</p>
           ) : (

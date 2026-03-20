@@ -39,17 +39,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
       >
         <Navbar />
-        <PathnameWrapper>{children}
+        <PathnameWrapper>
+          {children}
           <Toaster position="bottom-right" />
         </PathnameWrapper>
         <Footer />
-        <UmamiTracker />
         <Script
           src="https://cloud.umami.is/script.js"
           data-website-id="db1dd232-3950-4f3f-9242-20fd47935f78"
-          data-auto-track="true"
+          data-auto-track="false"
           strategy="afterInteractive"
         />
+        <UmamiTracker />
       </body>
     </html>
   );
