@@ -24,7 +24,7 @@ export default function Hero() {
 
   return (
     <>
-      <section className="relative flex flex-col md:flex-row items-center justify-center h-screen overflow-hidden bg-white dark:bg-black">
+      <section className="relative flex flex-col md:flex-row items-center justify-center h-screen overflow-hidden bg-black">
         {/* BACKGROUND EFFECT */}
         <div className="absolute inset-0 opacity-20 dark:opacity-30 pointer-events-none">
           <div className="w-full h-full bg-gradient-to-b from-[#006200]/20 to-transparent animate-pulse" />

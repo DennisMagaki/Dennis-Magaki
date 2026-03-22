@@ -13,6 +13,7 @@ type UmamiStats = {
 type Metric = {
   x: string;
   y: number;
+  country?: string;
 };
 
 type ExpandedMetric = {
@@ -24,10 +25,20 @@ type ExpandedMetric = {
   totaltime: number;
 };
 
-type EventItem = {
-  x: string;
-  y: number;
-  t: string;
+type SessionItem = {
+  id: string;
+  firstAt: number;
+  lastAt: number;
+  pageviews: number;
+  device?: string;
+  browser?: string;
+  os?: string;
+  country?: string;
+  city?: string;
+  referrer?: string;
+  createdAt: number;
+  visits: number;
+  views: number;
 };
 
 type PageViewsResponse = {
@@ -107,23 +118,27 @@ export function getExpandedMetrics(
   );
 }
 
-export async function getEvents(
+export async function getSessions(
   websiteId: string,
   startAt: number,
-  endAt: number
-): Promise<EventItem[]> {
+  endAt: number,
+  page: number = 1,
+  pageSize: number = 20
+): Promise<{ data: SessionItem[]; pagination: { total: number; totalPages: number } }> {
   const res = await umamiFetch<any>(
-    `/websites/${websiteId}/events/series?${buildParams({
+    `/websites/${websiteId}/sessions?${buildParams({
       startAt,
       endAt,
+      page,
+      pageSize,
+      timezone: 'Africa/Nairobi',
     })}`
   );
-
-  // normalize shape
-  if (Array.isArray(res)) return res;
-  if (Array.isArray(res?.data)) return res.data;
-
-  return [];
+  
+  return {
+    data: res.data || res,
+    pagination: res.pagination || { total: res.length, totalPages: 1 }
+  };
 }
 
 export function getPageViews(
