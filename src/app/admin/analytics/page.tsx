@@ -319,7 +319,7 @@ function Row({
       <span className="flex items-center truncate max-w-[65%] sm:max-w-[70%] gap-2">
         {countryCode && (
           <img
-            src={`/flags/${countryCode.toUpperCase()}.png`}
+            src={`/flags/${countryCode.toLowerCase()}.png`}
             alt={countryCode}
             className="w-4 h-3"
           />
