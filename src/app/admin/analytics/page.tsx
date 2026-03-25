@@ -68,12 +68,25 @@ export default async function AnalyticsPage({
     )
     .slice(0, 25);
 
+  function formatTime(seconds: number) {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    let result = "";
+    if (hrs > 0) result += `${hrs}h `;
+    if (mins > 0 || hrs > 0) result += `${mins}m `;
+    result += `${secs}s`;
+
+    return result.trim();
+  }
+
   return (
     <div className="bg-black text-white min-h-screen px-3 sm:px-4 md:px-6 py-4 md:py-6 font-montserrat space-y-4 md:space-y-6 mt-16 md:mt-20">
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
-        <h1 className="text-lg md:text-xl font-semibold">Analytics</h1>
-        <div className="flex gap-2 text-xs">
+        <h1 className="text-lg md:text-3xl font-semibold">Analytics</h1>
+        <div className="flex gap-2 text-sm">
           {["24h", "7d", "30d", "all"].map((r) => (
             <Link
               key={r}
@@ -94,7 +107,7 @@ export default async function AnalyticsPage({
             </Link>
           ))}
         </div>
-        <p className="text-xs text-gray-400">
+        <p className="text-sm font-semibold text-gray-400">
           {selectedRange === "all"
             ? "All time"
             : selectedRange === "24h"
@@ -113,7 +126,16 @@ export default async function AnalyticsPage({
         />
         <StatCard title="Pageviews" value={stats.pageviews} />
         <StatCard title="Active Visitors" value={active.visitors} />
-        <StatCard title="Time" value={`${stats.totaltime}s`} />
+        <StatCard
+          title="Total Time (Average Time per Visit)"
+          value={
+            stats.visits
+              ? `${formatTime(stats.totaltime)} (${formatTime(
+                  Math.floor(stats.totaltime / stats.visits),
+                )})`
+              : `${formatTime(stats.totaltime)}`
+          }
+        />
         <StatCard
           title="Bounces (Bounce Rate)"
           value={`${stats.bounces} (${((stats.bounces / stats.visits) * 100 || 0).toFixed(1)}%)`}
