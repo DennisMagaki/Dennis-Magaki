@@ -102,7 +102,7 @@ export function Modal({
                       
                       <span className="truncate">{displayLabel}</span>
                     </span>
-                    <span className="text-white font-medium ml-2">{item.y}</span>
+                    <span className="text-white font-medium ml-2">{item.y} visitors</span>
                   </div>
                 );
               })}
