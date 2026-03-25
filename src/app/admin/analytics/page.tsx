@@ -9,11 +9,27 @@ import {
 import { Modal } from "@/app/components/Modal";
 import { getCountryName } from "@/lib/countries";
 import { getReferrerName, getReferrerLogo } from "@/lib/referrers";
+import Link from "next/link";
 
-export default async function AnalyticsPage() {
+export default async function AnalyticsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string }>;
+}) {
   const websiteId = process.env.UMAMI_WEBSITE_ID!;
   const endAt = Date.now();
-  const startAt = endAt - 30 * 24 * 60 * 60 * 1000;
+
+  const ranges: Record<string, number | null> = {
+    "24h": 24 * 60 * 60 * 1000,
+    "7d": 7 * 24 * 60 * 60 * 1000,
+    "30d": 30 * 24 * 60 * 60 * 1000,
+    all: null,
+  };
+
+  const selectedRange = (await searchParams).range || "30d";
+  const rangeMs = ranges[selectedRange as keyof typeof ranges];
+
+  const startAt = rangeMs != null ? endAt - rangeMs : 0;
 
   const [
     stats,
@@ -45,13 +61,49 @@ export default async function AnalyticsPage() {
 
   const sessions = sessionsData.data || sessionsData;
 
+  const sortedSessions = [...sessions]
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
+    .slice(0, 25);
+
   return (
     <div className="bg-black text-white min-h-screen px-3 sm:px-4 md:px-6 py-4 md:py-6 font-montserrat space-y-4 md:space-y-6 mt-16 md:mt-20">
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
-  <h1 className="text-lg md:text-xl font-semibold">Analytics</h1>
-  <p className="text-xs text-gray-400">Last 30 days</p>
-</div>
+        <h1 className="text-lg md:text-xl font-semibold">Analytics</h1>
+        <div className="flex gap-2 text-xs">
+          {["24h", "7d", "30d", "all"].map((r) => (
+            <Link
+              key={r}
+              href={`/admin/analytics?range=${r}`}
+              className={`px-2 py-1 rounded-md border ${
+                selectedRange === r
+                  ? "bg-blue-500 text-white border-blue-500"
+                  : "border-white/20 text-gray-400 hover:text-white"
+              }`}
+            >
+              {r === "all"
+                ? "All"
+                : r === "24h"
+                  ? "24h"
+                  : r === "7d"
+                    ? "7d"
+                    : "30d"}
+            </Link>
+          ))}
+        </div>
+        <p className="text-xs text-gray-400">
+          {selectedRange === "all"
+            ? "All time"
+            : selectedRange === "24h"
+              ? "Last 24 hours"
+              : selectedRange === "7d"
+                ? "Last 7 days"
+                : "Last 30 days"}
+        </p>
+      </div>
 
       {/* STATS */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
@@ -73,101 +125,110 @@ export default async function AnalyticsPage() {
         <div className="lg:col-span-3">
           <GlassCard title="Recent Sessions" totalItems={sessions.length}>
             <div className="overflow-x-auto">
-  <table className="min-w-[700px] w-full text-xs sm:text-sm text-left border-collapse">
+              <table className="min-w-[700px] w-full text-xs sm:text-sm text-left border-collapse">
                 {/* HEADER */}
                 <thead>
                   <tr className="text-gray-400 border-b border-white/10">
-                    <th className="py-2 pr-4 font-medium whitespace-nowrap">Visitor</th>
-                    <th className="py-2 pr-4 font-medium whitespace-nowrap">Device</th>
-                    <th className="py-2 pr-4 font-medium whitespace-nowrap">OS</th>
-                    <th className="py-2 pr-4 font-medium whitespace-nowrap">Browser</th>
-                    <th className="py-2 pr-4 font-medium whitespace-nowrap">Location</th>
-                    <th className="py-2 pr-4 font-medium whitespace-nowrap">Last Seen</th>
+                    <th className="py-2 pr-4 font-medium whitespace-nowrap">
+                      Visitor
+                    </th>
+                    <th className="py-2 pr-4 font-medium whitespace-nowrap">
+                      Device
+                    </th>
+                    <th className="py-2 pr-4 font-medium whitespace-nowrap">
+                      OS
+                    </th>
+                    <th className="py-2 pr-4 font-medium whitespace-nowrap">
+                      Browser
+                    </th>
+                    <th className="py-2 pr-4 font-medium whitespace-nowrap">
+                      Location
+                    </th>
+                    <th className="py-2 pr-4 font-medium whitespace-nowrap">
+                      Last Seen
+                    </th>
                   </tr>
                 </thead>
 
                 {/* BODY */}
                 <tbody>
-                  {sessions
-                    .sort(
-                      (a, b) =>
-                        new Date(b.createdAt).getTime() -
-                        new Date(a.createdAt).getTime(),
-                    )
-                    .slice(0, 25)
-                    .map((session, index) => {
-                      const start = new Date(session.firstAt);
-                      const end = new Date(session.lastAt);
+                  {sortedSessions.map((session, index) => {
+                    const start = new Date(session.firstAt);
+                    const end = new Date(session.lastAt);
 
-                      return (
-                        <tr
-                          key={`${session.id}-${session.createdAt}`}
-                          className="border-b border-white/5 hover:bg-white/5 transition"
-                        >
-                          {/* VISITOR */}
-                          <td className="py-2 text-white">
-                            {session.id.slice(0, 5)}...
-                          </td>
+                    return (
+                      <tr
+                        key={`${session.id}-${session.createdAt}`}
+                        className="border-b border-white/5 hover:bg-white/5 transition"
+                      >
+                        {/* VISITOR */}
+                        <td className="py-2 text-white">
+                          {session.id.slice(0, 5)}...
+                        </td>
 
-                          {/* DEVICE + BROWSER */}
-                          <td className="py-2">
-                            <span className="flex gap-1 px-2 py-[2px] text-xs whitespace-nowrap">
+                        {/* DEVICE + BROWSER */}
+                        <td className="py-2">
+                          <span className="flex gap-1 px-2 py-[2px] text-xs whitespace-nowrap">
+                            <img
+                              src={`/devices/${session.device}.png`}
+                              className="w-4 h-4"
+                            />
+                            {session.device}
+                          </span>
+                        </td>
+                        <td className="py-2">
+                          <span className="flex gap-1 px-2 py-[2px] text-xs whitespace-nowrap">
+                            <img
+                              src={`/oss/${session.os}.png`}
+                              className="w-4 h-4"
+                            />
+                            {session.os}
+                          </span>
+                        </td>
+                        <td className="py-2">
+                          <span className="flex gap-1 px-2 py-[2px] text-xs whitespace-nowrap">
+                            <img
+                              src={`/browsers/${session.browser}.png`}
+                              className="w-4 h-4"
+                            />
+                            {session.browser}
+                          </span>
+                        </td>
+
+                        {/* LOCATION */}
+                        <td className="py-2">
+                          {session.country ? (
+                            <div className="flex items-center gap-2 text-white">
                               <img
-                                src={`/devices/${session.device}.png`}
-                                className="w-4 h-4"
+                                src={`/flags/${session.country.toLowerCase()}.png`}
+                                className="w-4 h-3"
                               />
-                              {session.device}
-                            </span>
-                          </td>
-                          <td className="py-2">
-                            <span className="flex gap-1 px-2 py-[2px] text-xs whitespace-nowrap">
-                              <img
-                                src={`/oss/${session.os}.png`}
-                                className="w-4 h-4"
-                              />
-                              {session.os}
-                            </span>
-                          </td>
-                          <td className="py-2">
-                            <span className="flex gap-1 px-2 py-[2px] text-xs whitespace-nowrap">
-                              <img
-                                src={`/browsers/${session.browser}.png`}
-                                className="w-4 h-4"
-                              />
-                              {session.browser}
-                            </span>
-                          </td>
+                              <span>{session.city}</span>
+                            </div>
+                          ) : (
+                            <span className="text-gray-500">—</span>
+                          )}
+                        </td>
 
-                          {/* LOCATION */}
-                          <td className="py-2">
-                            {session.country ? (
-                              <div className="flex items-center gap-2 text-white">
-                                <img
-                                  src={`/flags/${session.country.toLowerCase()}.png`}
-                                  className="w-4 h-3"
-                                />
-                                <span>{session.city}</span>
-                              </div>
-                            ) : (
-                              <span className="text-gray-500">—</span>
-                            )}
-                          </td>
-
-                          {/* TIME */}
-                          <td className="py-2 text-gray-400">
-                            {end.toLocaleDateString(undefined, {
-                              month: 'long',
-                              day: 'numeric',
-                              year: 'numeric'
-                            })}{", "}
-                            {end.toLocaleTimeString(undefined, {
-                              hour: 'numeric',
-                              minute: 'numeric'
-                            })}
-                          </td>
-                        </tr>
-                      );
-                    })}
+                        {/* TIME */}
+                        <td className="py-2 text-gray-400">
+                          {end.toLocaleDateString(undefined, {
+                            month: "long",
+                            day: "numeric",
+                            year: "numeric",
+                            timeZone: "Africa/Nairobi",
+                          })}
+                          {", "}
+                          {end.toLocaleTimeString("en-GB", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: false,
+                            timeZone: "Africa/Nairobi",
+                          })}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -227,7 +288,7 @@ export default async function AnalyticsPage() {
                 <Row key={b.x} label={b.x} value={b.y} browser={b.x} />
               ))}
             </GlassCard>
-            <Modal title="Browsers" data={browsers} type="browsers"/>
+            <Modal title="Browsers" data={browsers} type="browsers" />
           </div>
 
           <div className="h-full flex flex-col">
@@ -236,7 +297,7 @@ export default async function AnalyticsPage() {
                 <Row key={o.x} label={o.x} value={o.y} os={o.x} />
               ))}
             </GlassCard>
-            <Modal title="Operating Systems" data={os} type="os"/>
+            <Modal title="Operating Systems" data={os} type="os" />
           </div>
 
           <div className="h-full flex flex-col">
@@ -268,8 +329,8 @@ function GlassCard({
 
   return (
     <div
-  className={`bg-white/5 border border-white/10 backdrop-blur-xl ${roundedClass} p-3 sm:p-4 h-full flex flex-col`}
->
+      className={`bg-white/5 border border-white/10 backdrop-blur-xl ${roundedClass} p-3 sm:p-4 h-full flex flex-col`}
+    >
       <h2 className="text-sm font-semibold text-blue-400 mb-2">{title}</h2>
       <div className="space-y-1 text-sm flex-1">{children}</div>
     </div>
@@ -300,20 +361,20 @@ function Row({
   browser?: string;
   device?: string;
   os?: string;
-  type?: 'country' | 'referrer' | 'city' | 'default';
+  type?: "country" | "referrer" | "city" | "default";
 }) {
   let displayLabel = label;
   let referrerLogo = null;
-  
-  if (type === 'country' && countryCode) {
+
+  if (type === "country" && countryCode) {
     displayLabel = getCountryName(countryCode);
-  } else if (type === 'city' && countryCode) {
-    displayLabel = label; 
-  } else if (type === 'referrer') {
+  } else if (type === "city" && countryCode) {
+    displayLabel = label;
+  } else if (type === "referrer") {
     displayLabel = getReferrerName(label);
     referrerLogo = getReferrerLogo(label);
   }
-  
+
   return (
     <div className="flex items-center justify-between text-gray-300 text-sm border-b border-white/5 pb-1">
       <span className="flex items-center truncate max-w-[65%] sm:max-w-[70%] gap-2">
@@ -324,12 +385,8 @@ function Row({
             className="w-4 h-3"
           />
         )}
-        {type === 'referrer' && referrerLogo && (
-          <img
-            src={referrerLogo}
-            alt={displayLabel}
-            className="w-6 h-6"
-          />
+        {type === "referrer" && referrerLogo && (
+          <img src={referrerLogo} alt={displayLabel} className="w-6 h-6" />
         )}
         {browser && (
           <img
@@ -345,14 +402,14 @@ function Row({
             className="w-4 h-4"
           />
         )}
-        {os && (
-          <img
-            src={`/oss/${os}.png`}
-            alt={os}
-            className="w-4 h-4"
-          />
-        )}
-        <span title={type === 'country' && countryCode ? getCountryName(countryCode) : undefined}>
+        {os && <img src={`/oss/${os}.png`} alt={os} className="w-4 h-4" />}
+        <span
+          title={
+            type === "country" && countryCode
+              ? getCountryName(countryCode)
+              : undefined
+          }
+        >
           {displayLabel}
         </span>
       </span>

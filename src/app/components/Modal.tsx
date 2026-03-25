@@ -11,7 +11,15 @@ export function Modal({
 }: {
   title: string;
   data: { x: string; y: number; country?: string }[];
-  type?: 'countries' | 'cities' | 'referrers' | 'devices' | 'browsers' | 'os' | 'pages' | 'default';
+  type?:
+    | "countries"
+    | "cities"
+    | "referrers"
+    | "devices"
+    | "browsers"
+    | "os"
+    | "pages"
+    | "default";
 }) {
   const [open, setOpen] = useState(false);
 
@@ -25,21 +33,21 @@ export function Modal({
     let flagCode = null;
 
     // Handle different types
-    if (type === 'countries') {
+    if (type === "countries") {
       displayLabel = getCountryName(item.x);
       flagCode = item.x;
-    } else if (type === 'cities' && item.country) {
+    } else if (type === "cities" && item.country) {
       displayLabel = `${item.x}, ${getCountryName(item.country)}`;
       flagCode = item.country;
-    } else if (type === 'referrers') {
+    } else if (type === "referrers") {
       displayLabel = getReferrerName(item.x);
       const logo = getReferrerLogo(item.x);
       if (logo) icon = logo;
-    } else if (type === 'devices') {
+    } else if (type === "devices") {
       icon = `/devices/${item.x.toLowerCase()}.png`;
-    } else if (type === 'browsers') {
+    } else if (type === "browsers") {
       icon = `/browsers/${item.x.toLowerCase()}.png`;
-    } else if (type === 'os') {
+    } else if (type === "os") {
       icon = `/oss/${item.x.toLowerCase()}.png`;
     }
 
@@ -75,7 +83,7 @@ export function Modal({
             <div className="space-y-2 text-xs">
               {data.map((item, i) => {
                 const { displayLabel, icon, flagCode } = getDisplayItem(item);
-                
+
                 return (
                   <div
                     key={i}
@@ -90,7 +98,7 @@ export function Modal({
                           className="w-4 h-3"
                         />
                       )}
-                      
+
                       {/* Icon for devices/browsers/os/referrers */}
                       {icon && (
                         <img
@@ -99,10 +107,12 @@ export function Modal({
                           className="w-4 h-4"
                         />
                       )}
-                      
+
                       <span className="truncate">{displayLabel}</span>
                     </span>
-                    <span className="text-white font-medium ml-2">{item.y} visitors</span>
+                    <span className="text-white font-medium ml-2">
+                      {item.y} {item.y === 1 ? "visitor" : "visitors"}
+                    </span>
                   </div>
                 );
               })}
