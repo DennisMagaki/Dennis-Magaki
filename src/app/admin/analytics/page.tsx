@@ -143,7 +143,7 @@ export default async function AnalyticsPage() {
                             {session.country ? (
                               <div className="flex items-center gap-2 text-white">
                                 <img
-                                  src={`/flags/${session.country}.png`}
+                                  src={`/flags/${session.country.toLowerCase()}.png`}
                                   className="w-4 h-3"
                                 />
                                 <span>{session.city}</span>
