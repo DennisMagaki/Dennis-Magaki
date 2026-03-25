@@ -347,7 +347,7 @@ function Row({
         )}
         {os && (
           <img
-            src={`/oss/${os.toLowerCase()}.png`}
+            src={`/oss/${os}.png`}
             alt={os}
             className="w-4 h-4"
           />
