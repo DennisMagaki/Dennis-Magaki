@@ -24,8 +24,31 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: "Dennis Magaki",
-  description: "Software Developer",
+  description: "Software Engineer and UI/UX Designer.",
+  openGraph: {
+    title: "Dennis Magaki",
+    description: "Software Engineer and UI/UX Designer.",
+    url: "https://dennis-magaki.is-a.dev",
+    siteName: "Dennis Magaki",
+    images: [
+      {
+        url: "/images/preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Dennis Magaki",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dennis Magaki",
+    description: "Software Engineer and UI/UX Designer.",
+    images: ["/images/preview.png"],
+  },
 };
+
 
 export default function RootLayout({
   children,

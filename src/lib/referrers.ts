@@ -3,6 +3,7 @@ export const referrersList: Record<string, string> = {
   "t.me": "Telegram",
   "l.instagram.com": "Instagram",
   "l.facebook.com": "Facebook",
+  "facebook.com": "Facebook",
   "lnkd.in": "LinkedIn",
   "com.linkedin.android": "LinkedIn",
   "wa.me": "WhatsApp",

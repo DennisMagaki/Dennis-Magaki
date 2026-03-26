@@ -1,60 +1,33 @@
-// app/api/spotify/now-playing/route.ts
+// app/api/now-playing/route.ts
 import { NextResponse } from "next/server";
-import { getAccessToken } from "@/lib/spotify";
-
-// helper: safely parse JSON
-function tryParseJSON(text: string) {
-  try {
-    return JSON.parse(text);
-  } catch {
-    return null;
-  }
-}
 
 export async function GET() {
-  const { access_token } = await getAccessToken();
+  const apiKey = process.env.LASTFM_API_KEY!;
+  const username = process.env.LASTFM_USERNAME!;
 
-  // 1️⃣ Try current track
-  const nowPlayingRes = await fetch(
-    "https://api.spotify.com/v1/me/player/currently-playing",
-    {
-      headers: { Authorization: `Bearer ${access_token}` },
-    }
+  const res = await fetch(
+    `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${apiKey}&format=json&limit=1`,
+    { next: { revalidate: 5 } }
   );
 
-  const nowText = await nowPlayingRes.text();
-  const now = tryParseJSON(nowText);
+  const data = await res.json();
 
-  if (now?.item) {
-    return NextResponse.json({
-      track: now.item,
-      isPlaying: true,
-    });
-  }
+  const track = data?.recenttracks?.track?.[0];
 
-  // 2️⃣ Fallback to last played
-  const lastRes = await fetch(
-    "https://api.spotify.com/v1/me/player/recently-played?limit=1",
-    {
-      headers: { Authorization: `Bearer ${access_token}` },
-    }
-  );
-
-  const lastText = await lastRes.text();
-  const last = tryParseJSON(lastText);
-
-  // debug log: shows what Spotify returned if not JSON
-  if (!last) {
-    console.warn("Spotify last-played returned invalid JSON:", lastText);
+  if (!track) {
     return NextResponse.json({ track: null, isPlaying: false });
   }
 
-  if (!last.items?.length) {
-    return NextResponse.json({ track: null, isPlaying: false });
-  }
+  const isPlaying = track["@attr"]?.nowplaying === "true";
 
   return NextResponse.json({
-    track: last.items[0].track,
-    isPlaying: false,
+    track: {
+      name: track.name,
+      artist: track.artist["#text"],
+      album: track.album["#text"],
+      image: track.image?.[2]?.["#text"], // medium image
+      url: track.url,
+    },
+    isPlaying,
   });
 }

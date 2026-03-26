@@ -201,10 +201,10 @@ export default async function AnalyticsPage({
                         <td className="py-2">
                           <span className="flex gap-1 px-2 py-[2px] text-xs whitespace-nowrap">
                             <img
-                              src={`/oss/${session.os}.png`}
+                              src={`/oss/${session.os || "unknown"}.png`}
                               className="w-4 h-4"
                             />
-                            {session.os}
+                            {session.os || "Unknown"}
                           </span>
                         </td>
                         <td className="py-2">
@@ -424,7 +424,13 @@ function Row({
             className="w-4 h-4"
           />
         )}
-        {os && <img src={`/oss/${os}.png`} alt={os} className="w-4 h-4" />}
+        {os && (
+          <img
+            src={`/oss/${os || "unknown"}.png`}
+            alt={os || "Unknown"}
+            className="w-4 h-4"
+          />
+        )}
         <span
           title={
             type === "country" && countryCode
@@ -432,7 +438,7 @@ function Row({
               : undefined
           }
         >
-          {displayLabel}
+          {displayLabel || "Unknown"}
         </span>
       </span>
       <span className="text-white font-medium">{value}</span>

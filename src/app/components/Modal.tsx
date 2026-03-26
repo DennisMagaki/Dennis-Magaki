@@ -48,7 +48,7 @@ export function Modal({
     } else if (type === "browsers") {
       icon = `/browsers/${item.x.toLowerCase()}.png`;
     } else if (type === "os") {
-      icon = `/oss/${item.x.toLowerCase()}.png`;
+      icon = `/oss/${item.x.toLowerCase() || "unknown"}.png`;
     }
 
     return { displayLabel, icon, flagCode };
@@ -108,7 +108,7 @@ export function Modal({
                         />
                       )}
 
-                      <span className="truncate">{displayLabel}</span>
+                      <span className="truncate">{displayLabel || "Unknown"}</span>
                     </span>
                     <span className="text-white font-medium ml-2">
                       {item.y} {item.y === 1 ? "visitor" : "visitors"}
