@@ -39,82 +39,51 @@ export function MusicCard() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#0d0d0d] p-6 transition-transform hover:scale-[1.02] w-full h-[140px]">
-      {/* Background Glow */}
-      <div
-        className="absolute inset-0 opacity-20 blur-3xl pointer-events-none"
-        style={{
-          backgroundImage: `url(${track.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d] p-5 w-full h-[120px]">
+
+  {/* Background Glow */}
+  <div
+    className="absolute inset-0 opacity-10 blur-2xl"
+    style={{
+      backgroundImage: `url(${track.image})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}
+  />
+
+  <div className="relative z-10 flex items-center gap-4">
+    {/* Album */}
+    <div className="relative h-20 w-20 flex-shrink-0">
+      <img
+        src={track.image}
+        alt=""
+        className="h-full w-full rounded-lg object-cover"
       />
 
-      <div className="relative z-10 flex items-center gap-6">
-        {/* Album Art Container */}
-        <div className="relative h-24 w-24 flex-shrink-0">
-          <img
-            src={track.image}
-            alt=""
-            className="h-full w-full rounded-xl object-cover shadow-2xl"
-          />
-
-          {/* Equalizer Overlay */}
-          {isPlaying && (
-            <div
-              style={{
-                position: "absolute",
-                inset: 5,
-                display: "flex",
-                alignItems: "end",
-                justifyContent: "end",
-                backgroundColor: "rgba(0,0,0,0.35)",
-                borderRadius: "12px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "end",
-                  gap: "4px",
-                  height: "25px",
-                  padding: "2px",
-                  backgroundColor: "rgba(0, 0, 0, 0)",
-                  backdropFilter: "blur(32px)",
-                  WebkitBackdropFilter: "blur(32px)",
-                  borderRadius: "6px",
-                }}
-              >
-                <style>{`
-                  @keyframes eq-bounce {
-                    0%, 100% { height: 10px; }
-                    50% { height: 20px; }
-                  }
-                  .eq-bar {
-                    width: 4px;
-                    background-color: #22c55e;
-                    animation: eq-bounce 0.8s ease-in-out infinite;
-                  }
-                `}</style>
-                <div className="eq-bar" style={{ animationDelay: "0.1s" }} />
-                <div className="eq-bar" style={{ animationDelay: "0.3s" }} />
-                <div className="eq-bar" style={{ animationDelay: "0.5s" }} />
-              </div>
-            </div>
-          )}
+      {isPlaying && (
+        <div className="absolute inset-1 flex items-end justify-end bg-black/40 backdrop-blur-md rounded-lg">
+          <div className="flex items-end gap-[3px] h-5 p-1">
+            <div className="eq-bar" style={{ animationDelay: "0.1s" }} />
+            <div className="eq-bar" style={{ animationDelay: "0.3s" }} />
+            <div className="eq-bar" style={{ animationDelay: "0.5s" }} />
+          </div>
         </div>
-
-        {/* Info & Progress */}
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-bold uppercase tracking-widest text-gray-400">
-            {isPlaying ? "Now Playing" : "Last Played"}
-          </p>
-          <h4 className="truncate text-3xl font-bold text-white mb-1">
-            {track.name}
-          </h4>
-          <p className="truncate text-lg text-gray-400">{track.artist}</p>
-        </div>
-      </div>
+      )}
     </div>
+
+    {/* Info */}
+    <div className="flex-1 min-w-0">
+      <p className="text-xs uppercase tracking-wider text-gray-500">
+        {isPlaying ? "Now Playing" : "Last Played"}
+      </p>
+      <h4 className="truncate text-xl font-semibold text-white">
+        {track.name}
+      </h4>
+      <p className="truncate text-sm text-gray-400">
+        {track.artist}
+      </p>
+    </div>
+  </div>
+</div>
   );
 }
