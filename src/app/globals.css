@@ -29,3 +29,8 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+@keyframes eq {
+  0%, 100% { height: 3px; }
+  50% { height: 10px; }
+}

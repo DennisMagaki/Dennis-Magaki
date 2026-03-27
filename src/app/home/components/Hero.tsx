@@ -26,9 +26,8 @@ export default function Hero() {
     <>
       <section className="relative flex flex-col md:flex-row items-center justify-center h-screen overflow-hidden bg-black">
         {/* BACKGROUND EFFECT */}
-        <div className="absolute inset-0 opacity-20 dark:opacity-30 pointer-events-none">
-          <div className="w-full h-full bg-gradient-to-b from-[#006200]/20 to-transparent animate-pulse" />
-        </div>
+        <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.15),transparent_50%)] pointer-events-none" />
+        
 
         {/* LEFT SIDE – TEXT */}
         <div className="relative z-10 w-full md:w-1/2 flex flex-col justify-center px-6 md:px-16 text-center md:text-left font-montserrat">
