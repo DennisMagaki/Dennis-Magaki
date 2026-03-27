@@ -41,7 +41,7 @@ export default function AdminLogin() {
       setLoading(false);
       return;
     }
-    router.push("/admin/messages");
+    router.push("/admin");
   };
 
   return (
