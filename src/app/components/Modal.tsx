@@ -48,7 +48,7 @@ export function Modal({
     } else if (type === "browsers") {
       icon = `/browsers/${item.x.toLowerCase()}.png`;
     } else if (type === "os") {
-      icon = `/oss/${item.x.toLowerCase() || "unknown"}.png`;
+      icon = `/oss/${item.x || "unknown"}.png`;
     }
 
     return { displayLabel, icon, flagCode };

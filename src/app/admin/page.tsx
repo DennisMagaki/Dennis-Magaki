@@ -71,7 +71,7 @@ export default function AdminHome() {
                 </p>
 
                 {isPlaying && (
-                  <div className="flex items-end gap-[2px] h-3">
+                  <div className="flex items-center gap-[2px] h-3">
                     <div className="w-[3px] bg-green-400 animate-[eq_1s_ease-in-out_infinite]" />
                     <div className="w-[3px] bg-green-400 animate-[eq_0.8s_ease-in-out_infinite_0.2s]" />
                     <div className="w-[3px] bg-green-400 animate-[eq_1.2s_ease-in-out_infinite_0.4s]" />
@@ -83,7 +83,7 @@ export default function AdminHome() {
                 {track.name}
               </h1>
 
-              <p className="text-gray-400 mt-1 text-xl">{track.artist}</p>
+              <p className="text-gray-100 mt-1 text-xl">{track.artist}</p>
             </div>
           )}
         </div>

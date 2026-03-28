@@ -3,6 +3,7 @@ export const referrersList: Record<string, string> = {
   "t.me": "Telegram",
   "l.instagram.com": "Instagram",
   "l.facebook.com": "Facebook",
+  "l.threads.com":"Threads",
   "facebook.com": "Facebook",
   "lnkd.in": "LinkedIn",
   "com.linkedin.android": "LinkedIn",
@@ -18,6 +19,7 @@ export const referrerLogos: Record<string, string> = {
   "instagram": "/referrers/instagram.png",
   "facebook": "/referrers/facebook.png",
   "linkedin": "/referrers/linkedin.png",
+  "threads": "/referrers/threads.png"
 };
 
 export function getReferrerName(referrer: string): string {

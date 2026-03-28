@@ -20,6 +20,14 @@ export default function Navbar() {
     { label: "Games", href: "/games" },
   ];
 
+  const adminLinks = [
+    { label: "Dashboard", href: "/admin" },
+    { label: "Messgaes", href: "/admin/messages" },
+    { label: "Analytics", href: "/admin/analytics" },
+  ];
+
+  const isAdminRoute = pathname.startsWith("/admin");
+
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
@@ -30,7 +38,7 @@ export default function Navbar() {
   if (pathname === "/") return null;
 
   // Split links into main and extra for separator
-  const mainLinks = navLinks.slice(0, 5);
+  const mainLinks = isAdminRoute ? adminLinks : navLinks.slice(0, 5);
   const extraLinks = navLinks.slice(5);
 
   return (
