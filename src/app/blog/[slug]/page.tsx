@@ -12,8 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const baseUrl = "https://dennis-magaki.is-a.dev";
 
   const url = `${baseUrl}/blog/${slug}`;
   const image = post.image || `${baseUrl}/placeholder-image.jpg`;
