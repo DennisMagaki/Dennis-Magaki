@@ -53,7 +53,7 @@ export default async function Post({ params }: Props) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   const placeholderImage = "/placeholder-image.jpg";
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const baseUrl = "https://dennis-magaki.is-a.dev";
   const postUrl = `${baseUrl}/blog/${slug}`;
 
   const formattedDate = post.date
