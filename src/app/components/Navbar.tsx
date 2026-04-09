@@ -22,7 +22,7 @@ export default function Navbar() {
 
   const adminLinks = [
     { label: "Dashboard", href: "/admin" },
-    { label: "Messgaes", href: "/admin/messages" },
+    { label: "Messages", href: "/admin/messages" },
     { label: "Analytics", href: "/admin/analytics" },
   ];
 

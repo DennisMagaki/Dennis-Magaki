@@ -1,10 +1,9 @@
-export default function Blog(){
-    return (
-        <>
-        <div className="flex flex-col items-center justify-center h-[90vh] bg-black text-white font-montserrat">
-            <h1 className="text-5xl font-bold uppercase mb-5">Blogs</h1>
-            <h4>Coming Soon</h4>
-        </div>
-        </>
-    )
+
+import { getAllPosts } from "@/lib/posts";
+import BlogClient from "./BlogClient";
+
+export default function Page() {
+  const posts = getAllPosts();
+
+  return <BlogClient posts={posts} />;
 }
