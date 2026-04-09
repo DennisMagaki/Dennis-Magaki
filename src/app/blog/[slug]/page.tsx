@@ -18,16 +18,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const image = post.image || `${baseUrl}/placeholder-image.jpg`;
 
   return {
-    title: post.title,
+    title: `${post.title} - Dennis Magaki`,
     description:
       post.description || "Read this blog post on our website.",
 
     openGraph: {
-      title: post.title,
+      title: `${post.title} - Dennis Magaki`,
       description:
         post.description || "Read this blog post on our website.",
       url,
-      siteName: "Your Site Name",
+      siteName: "Dennis Magaki",
       images: [
         {
           url: image,
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     twitter: {
       card: "summary_large_image",
-      title: post.title,
+      title: `${post.title} - Dennis Magaki`,
       description:
         post.description || "Read this blog post on our website.",
       images: [image],
