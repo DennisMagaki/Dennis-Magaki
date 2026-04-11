@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import PathnameWrapper from "./pathname-wrapper";
 import { Toaster } from "react-hot-toast";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,7 +50,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -61,6 +60,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased min-h-[100vh]`}
       >
+        <Analytics />
         <Navbar />
         <PathnameWrapper>
           {children}
