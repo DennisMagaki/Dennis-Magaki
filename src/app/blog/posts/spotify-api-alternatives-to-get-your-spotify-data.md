@@ -92,9 +92,9 @@ In this article, we will only use one basic endpoint, `user.getRecentTracks`. Th
 
 The following is are sample urls and responses from these endpoints:
 
-JSON: ``` /?method=user.getrecenttracks&user=rj&api_key=YOUR_API_KEY&format=json```
+JSON: ```/?method=user.getrecenttracks&user=rj &api_key=YOUR_API_KEY&format=json```
 
-XML: ``` /?method=user.getrecenttracks&user=rj&api_key=YOUR_API_KEY```
+XML: ```/?method=user.getrecenttracks&user=rj &api_key=YOUR_API_KEY```
 
 Sample response:
 ```xml
