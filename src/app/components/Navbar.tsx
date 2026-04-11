@@ -16,8 +16,8 @@ export default function Navbar() {
     { label: "Experience", href: "/home#experience" },
     { label: "Projects", href: "/home#work" },
     { label: "Contact", href: "/home#contact" },
-    { label: "Blog", href: "/blog" },
-    { label: "Games", href: "/games" },
+    { label: "Blogs", href: "/blog" },
+    { label: "Business", href: "/business" },
   ];
 
   const adminLinks = [
@@ -79,8 +79,8 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                className={`relative group transition ease-in-out duration-300 font-montserrat uppercase text-sm font-bold ${
-                  pathname === href ? "font-semibold" : ""
+                className={`relative group transition ease-in-out duration-300 font-montserrat uppercase text-base font-bold ${
+                  pathname === href ? "font-bold" : ""
                 }`}
               >
                 {label}

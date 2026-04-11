@@ -1,5 +1,5 @@
 ---
-title: "Adding Umami Cloud Analytics on your NextJS website"
+title: "Adding Umami Cloud Analytics on your NextJS Website"
 date: "April 9, 2026"
 description: "Easy way to add analytics onto you website for insights using Umami"
 image: "/blogs/umami-nextjs-cover.jpg"

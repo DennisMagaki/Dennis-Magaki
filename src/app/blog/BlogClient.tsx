@@ -10,6 +10,7 @@ type Post = {
   date?: string;
   tags: string[];
   image?: string;
+  author: string;
 };
 
 export default function BlogClient({ posts }: { posts: Post[] }) {
@@ -24,13 +25,10 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
   const placeholderImage = "/placeholder-image.jpg";
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-20 text-white font-montserrat">
-      
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-25 text-white font-montserrat">
       {/* HEADER */}
       <div className="mb-8 md:mb-10">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-          Blogs
-        </h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">Blogs</h1>
       </div>
 
       {/* MOBILE TAG FILTER (TOP) */}
@@ -64,7 +62,6 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-        
         {/* POSTS GRID */}
         <main className="flex-1">
           {filteredPosts.length === 0 ? (
@@ -74,13 +71,10 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2  gap-6 sm:gap-8">
-              
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 items-stretch">
               {filteredPosts.map((post) => (
                 <Link key={post.slug} href={`/blog/${post.slug}`}>
-                  
-                  <article className="group bg-white/5 rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105 cursor-pointer border border-gray-800 hover:border-gray-700">
-                    
+                  <article className="h-full flex flex-col group bg-white/5 rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105 cursor-pointer border border-gray-800 hover:border-gray-700">
                     {/* IMAGE */}
                     <div className="relative w-full h-44 sm:h-48 md:h-52 overflow-hidden bg-gray-800">
                       <Image
@@ -92,19 +86,18 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
                     </div>
 
                     {/* CONTENT */}
-                    <div className="p-4 sm:p-5">
-                      
-                      <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 line-clamp-2 group-hover:text-blue-500 transition">
+                    <div className="p-4 sm:p-5 flex flex-col flex-grow">
+                      <h2 className="text-lg sm:text-xl font-bold mb-2 line-clamp-3 group-hover:text-blue-500 transition">
                         {post.title}
                       </h2>
 
                       {post.date && (
                         <p className="text-xs sm:text-sm text-gray-400 mb-3">
-                          {post.date}
+                          {post.author} | {post.date}
                         </p>
                       )}
 
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 mt-auto">
                         {post.tags.map((tag) => (
                           <span
                             key={tag}
@@ -114,7 +107,6 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
                           </span>
                         ))}
                       </div>
-
                     </div>
                   </article>
                 </Link>
@@ -124,15 +116,13 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
         </main>
 
         {/* DESKTOP SIDEBAR */}
-        <aside className="hidden lg:block w-64 xl:w-72">
+        <aside className="hidden lg:block w-56 border-l border-white/30 p-4">
           <div className="sticky top-24">
-            
             <h2 className="text-lg font-semibold mb-4 text-gray-300">
               Filter by tags
             </h2>
 
             <div className="flex flex-wrap gap-3">
-              
               <button
                 onClick={() => setSelectedTag(null)}
                 className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition ${
@@ -157,11 +147,9 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
                   {tag}
                 </button>
               ))}
-
             </div>
           </div>
         </aside>
-
       </div>
     </div>
   );
