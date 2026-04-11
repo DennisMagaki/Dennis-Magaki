@@ -67,6 +67,7 @@ export default function RootLayout({
           <Toaster position="bottom-right" />
         </PathnameWrapper>
         <Footer />
+        <Analytics />
         <Script
           src="https://cloud.umami.is/script.js"
           data-website-id="db1dd232-3950-4f3f-9242-20fd47935f78"
