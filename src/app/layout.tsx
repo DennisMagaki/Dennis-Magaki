@@ -7,6 +7,7 @@ import PathnameWrapper from "./pathname-wrapper";
 import { Toaster } from "react-hot-toast";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,6 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <GoogleTagManager gtmId="G-FSJS9882K7" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased min-h-[100vh]`}
       >
