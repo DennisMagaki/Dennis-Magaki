@@ -10,23 +10,46 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  const navLinks = [
-    { label: "About", href: "/home#about" },
-    { label: "Tech Stack", href: "/home#stack" },
-    { label: "Experience", href: "/home#experience" },
-    { label: "Projects", href: "/home#work" },
-    { label: "Contact", href: "/home#contact" },
-    { label: "Blogs", href: "/blog" },
-    { label: "Business", href: "/business" },
-  ];
+  const routes = {
+    default: {
+      main: [
+        { label: "About", href: "/home#about" },
+        { label: "Tech Stack", href: "/home#stack" },
+        { label: "Experience", href: "/home#experience" },
+        { label: "Projects", href: "/home#work" },
+        { label: "Contact", href: "/home#contact" },
+      ],
+      extra: [
+        { label: "Blogs", href: "/blog" },
+        { label: "Business", href: "/business" },
+      ],
+    },
 
-  const adminLinks = [
-    { label: "Dashboard", href: "/admin" },
-    { label: "Messages", href: "/admin/messages" },
-    { label: "Analytics", href: "/admin/analytics" },
-  ];
+    business: {
+      main: [
+        { label: "Services", href: "/business#services" },
+        { label: "Projects", href: "/business#projects" },
+        { label: "Pricing", href: "/business#pricing" },
+        { label: "Contact", href: "/business#contact" },
+      ],
+      extra: [{ label: "Back to Main Site", href: "/home" }],
+    },
+
+    admin: {
+      main: [
+        { label: "Dashboard", href: "/admin" },
+        { label: "Messages", href: "/admin/messages" },
+        { label: "Analytics", href: "/admin/analytics" },
+      ],
+      extra: [
+        { label: "Blogs", href: "/blog" },
+        { label: "Business", href: "/business" },
+      ],
+    },
+  };
 
   const isAdminRoute = pathname.startsWith("/admin");
+  const isBusinessRoute = pathname.startsWith("/business");
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
@@ -38,15 +61,24 @@ export default function Navbar() {
   if (pathname === "/") return null;
 
   // Split links into main and extra for separator
-  const mainLinks = isAdminRoute ? adminLinks : navLinks.slice(0, 5);
-  const extraLinks = navLinks.slice(5);
+  const current = isAdminRoute
+    ? routes.admin
+    : isBusinessRoute
+      ? routes.business
+      : routes.default;
+
+  const mainLinks = current.main;
+  const extraLinks = current.extra;
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-[#000000]/20 text-[#ffffff] z-100 backdrop-blur-xl">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/home" className="flex items-center space-x-2">
+          <Link
+            href={isBusinessRoute ? "/business" : "/home"}
+            className="flex items-center space-x-2"
+          >
             <span className="font-bold text-3xl tracking-wide font-montserrat uppercase">
               Dennis Magaki
             </span>

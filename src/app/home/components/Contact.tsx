@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
 import toast from "react-hot-toast";
 
-export default function Contact() {
+export default function Contact({ type = "home" }: { type?: "home" | "business" }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -22,10 +22,18 @@ export default function Contact() {
   e.preventDefault();
 
   try {
+    const payload = {
+      ...form,
+      message:
+        type === "business"
+          ? `[BUSINESS INQUIRY]\n${form.message}`
+          : form.message,
+    };
+
     const res = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify(payload),
     });
 
     // Handle empty responses gracefully
@@ -130,7 +138,7 @@ export default function Contact() {
 
         {/* CONTACT FORM */}
         <div className="md:w-1/2">
-          <h2 className="text-2xl font-semibold text-purple-400 mb-4">
+          <h2 className="text-2xl font-semibold text-green-400 mb-4">
             Send a Message
           </h2>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
