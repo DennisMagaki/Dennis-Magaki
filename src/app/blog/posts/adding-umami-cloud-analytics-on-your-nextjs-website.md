@@ -48,9 +48,9 @@ You can deploy it using:
 
 Official repo:
 
-```
+
 https://github.com/umami-software/umami
-```
+
 
 ---
 

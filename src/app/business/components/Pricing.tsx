@@ -157,7 +157,7 @@ export default function Pricing() {
               ))}
             </ul>
             <a
-              href="mailto:dennismagaki.26@gmail.com"
+              href="#contact"
               className={`mt-auto text-center font-semibold py-3 rounded-xl transition-colors ${
                 plan.featured
                   ? `${plan.bg_color} ${plan.hover_color} text-black`

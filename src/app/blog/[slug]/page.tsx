@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Calendar, User, Clock } from "lucide-react";
 import ShareButtons from "../components/ShareButtons";
 import type { Metadata } from "next";
+import MobileTOC from "../components/MobileTOC";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -63,29 +64,7 @@ export default async function Post({ params }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-20 text-white font-montserrat">
-      {/* MOBILE TOC (TOP) */}
-      {post.toc.length > 0 && (
-        <div className="lg:hidden mb-6">
-          <details className="bg-white/5 rounded-xl border border-gray-800 p-4">
-            <summary className="cursor-pointer font-semibold text-sm">
-              Table of Contents
-            </summary>
-            <ul className="mt-3 space-y-2 text-sm">
-              {post.toc.map((item, i) => (
-                <li key={i} style={{ paddingLeft: (item.level - 1) * 12 }}>
-                  <a
-                    href={`#${item.slug}`}
-                    className="text-gray-400 hover:text-blue-400 transition"
-                  >
-                    {item.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </details>
-        </div>
-      )}
-
+      <MobileTOC toc={post.toc} />
       <div className="">
         {/* MAIN CONTENT */}
         <article className="flex-1 max-w-3xl lg:max-w-7xl mx-auto w-full">
