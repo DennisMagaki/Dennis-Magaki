@@ -37,7 +37,7 @@ export default function Home() {
       <AnimatePresence>
         {openResume && (
           <motion.div
-            className="fixed inset-0 bg-black/80 backdrop-blur z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/80 backdrop-blur z-100 flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
