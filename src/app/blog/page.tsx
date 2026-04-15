@@ -2,8 +2,8 @@
 import { getAllPosts } from "@/lib/posts";
 import BlogClient from "./BlogClient";
 
-export default function Page() {
-  const posts = getAllPosts();
+export default async function Page() {
+  const posts = await getAllPosts();
 
   return <BlogClient posts={posts} />;
 }

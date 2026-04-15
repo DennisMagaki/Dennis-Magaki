@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "highlight.js/styles/github-dark.css";
 
 :root {
   --background: #f0f0f0;
@@ -16,55 +17,130 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #000000;
-    --foreground: #000000;
+    --foreground: #ffffff;
   }
 }
 
 @layer components {
   .markdown-content {
     @apply text-gray-300 leading-relaxed;
-    font-size: 1.125rem; /* 15px - slightly smaller */
+    font-size: 1.125rem;
 
-    /* Headings - tighter spacing */
-    h1, h2, h3, h4 {
+    h1,
+    h2,
+    h3,
+    h4 {
       @apply text-white tracking-tight scroll-mt-38 md:scroll-mt-30 lg:scroll-mt-38;
     }
-    h1 a, h2 a, h3 a, h4 a {
+
+    h1 a,
+    h2 a,
+    h3 a,
+    h4 a {
       @apply text-white;
     }
-    h1 a { @apply text-4xl md:text-5xl font-extrabold mt-8 mb-3; }
-    h2 a { @apply text-2xl md:text-3xl font-bold mt-6 mb-2 pb-0; }
-    h3 a { @apply text-xl font-semibold mt-5 mb-2; }
-    h4 a { @apply text-lg font-semibold mt-4 mb-1; }
 
-    /* Paragraphs - less bottom margin */
-    p { @apply mb-3 leading-relaxed; }
-    a { @apply text-blue-400 underline-offset-4 hover:underline transition; }
-    
-    /* Lists - tighter */
-    ul, ol { @apply my-3 pl-5 space-y-1; }
-    ul { @apply list-disc; }
-    ol { @apply list-decimal; }
-    li { @apply my-0 ml-10 mr-10; }
-    li > p { @apply my-0; }
+    h1 a {
+      @apply text-4xl md:text-5xl font-extrabold mt-8 mb-3;
+    }
 
-    /* Code - smaller */
-    code:not(pre code) { @apply bg-white/5 px-1 py-0.5 rounded text-xs font-mono text-white; }
-    pre { @apply bg-white/5 border border-gray-800 rounded-lg p-2 overflow-x-auto my-4 shadow-md text-xs; }
-    pre code { @apply bg-transparent text-gray-200 text-sm/1 font-mono; }
+    h2 a {
+      @apply text-2xl md:text-3xl font-bold mt-6 mb-2 pb-0;
+    }
 
-    /* Blockquotes - tighter */
-    blockquote { @apply border-l-4 border-blue-500 pl-4 py-1 my-4 italic text-gray-200 bg-gray-900/30 rounded-r; }
-    
-    /* Tables - compact */
-    table { @apply border-collapse w-full my-4 overflow-x-auto block text-sm; }
-    th, td { @apply border border-gray-700 px-3 py-1.5; }
-    th { @apply bg-white/10 text-left font-semibold; }
-    
-    /* Images, hr, small - reduced spacing */
-    img { @apply rounded-lg my-4 shadow-md mx-auto; }
-    hr { @apply my-6 border-0 h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent; }
-    small { @apply text-gray-400 text-xs; }
+    h3 a {
+      @apply text-xl font-semibold mt-5 mb-2;
+    }
+
+    h4 a {
+      @apply text-lg font-semibold mt-4 mb-1;
+    }
+
+    p {
+      @apply mb-3 leading-relaxed;
+    }
+
+    a {
+      @apply text-blue-400 underline-offset-4 hover:underline transition;
+    }
+
+    ul,
+    ol {
+      @apply my-3 pl-5 space-y-1;
+    }
+
+    ul {
+      @apply list-disc;
+    }
+
+    ol {
+      @apply list-decimal;
+    }
+
+    li {
+      @apply my-0 ml-10 mr-10 mb-2;
+    }
+
+    li>p {
+      @apply my-0;
+    }
+
+    pre {
+      position: relative;
+    }
+
+    pre::before {
+      content: attr(data-language);
+      position: relative;
+      top:  1px;
+      font-size: 1.0rem;
+      font-weight: bold;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: montserrat;
+    }
+
+    code:not(pre code) {
+      @apply bg-white/5 px-1 py-0.5 rounded text-sm font-mono text-white;
+    }
+
+    pre {
+      @apply border border-gray-800 rounded-lg p-2 overflow-x-auto my-4 shadow-md text-xs;
+    }
+
+    pre code {
+      @apply bg-transparent text-gray-200 text-sm font-mono;
+    }
+
+    blockquote {
+      @apply border-l-4 border-blue-500 pl-4 py-1 my-4 italic text-gray-200 bg-gray-900/30 rounded-r;
+    }
+
+    table {
+      @apply border-collapse w-full my-4 overflow-x-auto block text-sm;
+    }
+
+    th,
+    td {
+      @apply border border-gray-700 px-3 py-1.5;
+    }
+
+    th {
+      @apply bg-white/10 text-left font-semibold;
+    }
+
+    img {
+      @apply rounded-lg my-4 shadow-md mx-auto;
+    }
+
+    hr {
+      @apply my-6 border-0 h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent;
+    }
+
+    small {
+      @apply text-gray-400 text-xs;
+    }
   }
 }
 
@@ -82,12 +158,20 @@ html {
 .scrollbar-thin::-webkit-scrollbar {
   width: 6px;
 }
+
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: #374151;
   border-radius: 9999px;
 }
 
 @keyframes eq {
-  0%, 100% { height: 3px; }
-  50% { height: 10px; }
+
+  0%,
+  100% {
+    height: 3px;
+  }
+
+  50% {
+    height: 10px;
+  }
 }

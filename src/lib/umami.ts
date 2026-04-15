@@ -69,10 +69,13 @@ async function umamiFetch<T>(endpoint: string): Promise<T> {
 
 function buildParams(params: Record<string, string | number | undefined>) {
   return new URLSearchParams(
-    Object.entries(params).reduce((acc, [k, v]) => {
-      if (v !== undefined) acc[k] = String(v);
-      return acc;
-    }, {} as Record<string, string>)
+    Object.entries(params).reduce(
+      (acc, [k, v]) => {
+        if (v !== undefined) acc[k] = String(v);
+        return acc;
+      },
+      {} as Record<string, string>,
+    ),
   ).toString();
 }
 
@@ -81,10 +84,10 @@ function buildParams(params: Record<string, string | number | undefined>) {
 export function getWebsiteStats(
   websiteId: string,
   startAt: number,
-  endAt: number
+  endAt: number,
 ) {
   return umamiFetch<UmamiStats>(
-    `/websites/${websiteId}/stats?${buildParams({ startAt, endAt })}`
+    `/websites/${websiteId}/stats?${buildParams({ startAt, endAt })}`,
   );
 }
 
@@ -92,14 +95,14 @@ export function getMetrics(
   websiteId: string,
   startAt: number,
   endAt: number,
-  type: string
+  type: string,
 ) {
   return umamiFetch<Metric[]>(
     `/websites/${websiteId}/metrics?${buildParams({
       startAt,
       endAt,
       type,
-    })}`
+    })}`,
   );
 }
 
@@ -107,14 +110,14 @@ export function getExpandedMetrics(
   websiteId: string,
   startAt: number,
   endAt: number,
-  type: string
+  type: string,
 ) {
   return umamiFetch<ExpandedMetric[]>(
     `/websites/${websiteId}/metrics/expanded?${buildParams({
       startAt,
       endAt,
       type,
-    })}`
+    })}`,
   );
 }
 
@@ -123,39 +126,57 @@ export async function getSessions(
   startAt: number,
   endAt: number,
   page: number = 1,
-  pageSize: number = 20
-): Promise<{ data: SessionItem[]; pagination: { total: number; totalPages: number } }> {
+  pageSize: number = 20,
+): Promise<{
+  data: SessionItem[];
+  pagination: { total: number; totalPages: number };
+}> {
   const res = await umamiFetch<any>(
     `/websites/${websiteId}/sessions?${buildParams({
       startAt,
       endAt,
       page,
       pageSize,
-      timezone: 'Africa/Nairobi',
-    })}`
+      timezone: "Africa/Nairobi",
+    })}`,
   );
-  
+
   return {
     data: res.data || res,
-    pagination: res.pagination || { total: res.length, totalPages: 1 }
+    pagination: res.pagination || { total: res.length, totalPages: 1 },
   };
 }
 
 export function getPageViews(
   websiteId: string,
   startAt: number,
-  endAt: number
+  endAt: number,
 ) {
   return umamiFetch<PageViewsResponse>(
     `/websites/${websiteId}/pageviews?${buildParams({
       startAt,
       endAt,
-    })}`
+    })}`,
   );
 }
 
 export function getActiveVisitors(websiteId: string) {
-  return umamiFetch<ActiveVisitors>(
-    `/websites/${websiteId}/active`
-  );
+  return umamiFetch<ActiveVisitors>(`/websites/${websiteId}/active`);
+}
+
+export async function getPageViewsByUrl(
+  websiteId: string,
+  startAt: number,
+  endAt: number,
+) {
+  const data = await getMetrics(websiteId, startAt, endAt, "url");
+
+  // Convert to map: { "/blog/post-slug": views }
+  const map: Record<string, number> = {};
+
+  data.forEach((item) => {
+    map[item.x] = item.y;
+  });
+
+  return map;
 }

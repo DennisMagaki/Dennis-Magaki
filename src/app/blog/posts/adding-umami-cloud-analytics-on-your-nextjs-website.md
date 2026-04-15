@@ -3,7 +3,7 @@ title: "Adding Umami Cloud Analytics on your NextJS Website"
 date: "April 9, 2026"
 description: "Easy way to add analytics onto you website for insights using Umami"
 image: "/blogs/umami-nextjs-cover.jpg"
-tags: ["Analytics", "Umami", "NextJS"]
+tags: ["Analytics", "Umami", "NextJS", "API"]
 author: "Dennis Magaki"
 ---
 
@@ -376,5 +376,12 @@ After setup:
 Umami is a powerful alternative to traditional analytics tools, especially if you value privacy, simplicity, and performance.
 
 With just a few lines of code, you can gain meaningful insights into your users without compromising their trust.
+
+---
+
+## Resources
+
+- [Umami Cloud Documentation](https://docs.umami.is/docs/cloud)
+- [GitHub Repo to self host Umami](https://github.com/umami-software/umami)
 
 ---

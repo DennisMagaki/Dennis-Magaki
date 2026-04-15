@@ -1,6 +1,6 @@
 import { getPostBySlug } from "@/lib/posts";
 import Image from "next/image";
-import { Calendar, User, Clock } from "lucide-react";
+import { Calendar, User, Clock, EyeIcon } from "lucide-react";
 import ShareButtons from "../components/ShareButtons";
 import type { Metadata } from "next";
 import MobileTOC from "../components/MobileTOC";
@@ -101,6 +101,10 @@ export default async function Post({ params }: Props) {
                     <time dateTime={post.date}>{formattedDate}</time>
                   </div>
                 )}
+
+                <div className="flex items-center gap-1.5">
+                 <EyeIcon size={14} /> <span>{post.views} views</span>
+                </div>
 
                 {post.readingTime && (
                   <div className="flex items-center gap-1.5">

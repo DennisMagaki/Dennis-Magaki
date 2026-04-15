@@ -2,12 +2,14 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
-import html from "remark-html";
+import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkGfm from "remark-gfm";
 import rehypeStringify from "rehype-stringify";
 import remarkRehype from "remark-rehype";
+import { visit } from "unist-util-visit";
+import { getPageViewsByUrl } from "./umami";
 
 const postsDirectory = path.join(process.cwd(), "src/app/blog/posts");
 
@@ -17,9 +19,50 @@ function getReadingTime(content: string): number {
   return Math.ceil(words / wordsPerMinute);
 }
 
-// ✅ Get ALL posts (for blog list)
-export function getAllPosts() {
+function rehypeCodeTitles() {
+  return (tree: any) => {
+    visit(tree, "element", (node: any) => {
+      if (node.tagName === "pre") {
+        const code = node.children?.[0];
+
+        if (
+          code?.tagName === "code" &&
+          Array.isArray(code.properties?.className)
+        ) {
+          const classes = code.properties.className;
+
+          const langClass = classes.find((cls: string) =>
+            cls.startsWith("language-")
+          );
+
+          if (langClass) {
+            const lang = langClass.replace("language-", "");
+
+            node.properties = {
+              ...node.properties,
+              "data-language": lang,
+            };
+          }
+        }
+      }
+    });
+  };
+}
+
+export async function getAllPosts() {
   const files = fs.readdirSync(postsDirectory);
+
+  let viewsMap: Record<string, number> = {};
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/umami/views`, {
+      next: { revalidate: 300 }, // cache on Next side too
+    });
+
+    viewsMap = await res.json();
+  } catch (err) {
+    console.error("Failed to fetch views:", err);
+  }
 
   return files.map((file) => {
     const slugName = file.replace(".md", "");
@@ -27,6 +70,8 @@ export function getAllPosts() {
     const fileContent = fs.readFileSync(fullPath, "utf8");
 
     const { data } = matter(fileContent);
+
+    const pathUrl = `/blog/${slugName}`;
 
     return {
       slug: slugName,
@@ -36,6 +81,7 @@ export function getAllPosts() {
       image: data.image,
       author: data.author,
       description: data.description,
+      views: viewsMap[pathUrl] || 0,
     };
   });
 }
@@ -48,18 +94,27 @@ export async function getPostBySlug(slugName: string) {
   const { data, content } = matter(fileContent);
   const readingTime = getReadingTime(content);
 
-  // TOC extraction
   const toc = extractTOC(content);
 
   const processedContent = await remark()
-    .use(remarkGfm) // tables, strikethrough, etc
-    .use(remarkRehype) // convert to HTML AST
-    .use(rehypeSlug) // adds IDs to headings
-    .use(rehypeAutolinkHeadings, {
-      behavior: "wrap",
-    }) // clickable headings
+    .use(remarkGfm)
+    .use(remarkRehype)
+    .use(rehypeSlug)
+    .use(rehypeHighlight)
+    .use(rehypeCodeTitles)
+    .use(rehypeAutolinkHeadings, { behavior: "wrap" })
     .use(rehypeStringify)
     .process(content);
+
+  // 👇 fetch views
+  const websiteId = process.env.UMAMI_WEBSITE_ID!;
+  const viewsMap = await getPageViewsByUrl(
+    websiteId,
+    0,
+    Date.now()
+  );
+
+  const views = viewsMap[`/blog/${slugName}`] || 0;
 
   return {
     slug: slugName,
@@ -72,6 +127,7 @@ export async function getPostBySlug(slugName: string) {
     toc,
     description: data.description,
     author: data.author,
+    views, // 👈 ADD THIS
   };
 }
 

@@ -3,7 +3,7 @@ title: "Spotify API Alternatives for your Spotify Data"
 date: "April 11, 2026"
 description: ""
 image: "/blogs/spotify-api.jpg"
-tags: ["API", "Spotify", Music Tech]
+tags: ["API", "Spotify", "Music Tech"]
 author: "Dennis Magaki"
 ---
 
@@ -210,8 +210,19 @@ This means you are now able to fetch your Spotify data without using Spotify's A
 
 ---
 
-## Conclusion.
+## Conclusion
 
 With this workaround, you are now able to create your applications without worrying about Spotify's API management that would abruptly render your applications useless. Not only does Last.fm support Spotify, but also many other music providers which provides a richer dataset for your to build your application upon.
+
+---
+
+## References
+
+- [Why Spotify Has Restricted Its API Access: What Changed and Why It Matters in 2026](https://voclr.it/news/why-spotify-has-restricted-its-api-access-what-changed-and-why-it-matters-in-2026/)
+- [Spotify Just Killed Thousands of Third-Party Music Apps, and Developers Reveal Which Ones Are Next](https://www.headphonesty.com/2026/02/spotify-crackdown-thousands-third-party-music-apps/)
+
+## Resources
+
+- [Last.fm API Docs](https://www.last.fm/api)
 
 ---

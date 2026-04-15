@@ -11,6 +11,7 @@ type Post = {
   tags: string[];
   image?: string;
   author: string;
+  views: number;
 };
 
 export default function BlogClient({ posts }: { posts: Post[] }) {
@@ -90,18 +91,16 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
                       <h2 className="text-lg sm:text-xl font-bold mb-2 line-clamp-3 group-hover:text-blue-500 transition">
                         {post.title}
                       </h2>
-
-                      {post.date && (
-                        <p className="text-xs sm:text-sm text-gray-400 mb-3">
-                          {post.author} | {post.date}
-                        </p>
-                      )}
-
                       <div className="flex flex-wrap gap-2 mt-auto">
+                        {post.date && (
+                        <p className="text-xs sm:text-sm text-gray-400 mb-3">
+                          {post.author} • {post.date} • {post.views} views
+                        </p>
+                      )}<br />
                         {post.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="text-xs bg-blue-500 px-3 py-1 rounded-full text-white"
+                            className="text-xs bg-white/10 px-2 py-1 rounded"
                           >
                             {tag}
                           </span>
