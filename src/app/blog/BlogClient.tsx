@@ -91,20 +91,25 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
                       <h2 className="text-lg sm:text-xl font-bold mb-2 line-clamp-3 group-hover:text-blue-500 transition">
                         {post.title}
                       </h2>
-                      <div className="flex flex-wrap gap-2 mt-auto">
+                      <div className="mt-auto">
+                        {/* META */}
                         {post.date && (
-                        <p className="text-xs sm:text-sm text-gray-400 mb-3">
-                          {post.author} • {post.date} • {post.views} views
-                        </p>
-                      )}<br />
-                        {post.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs bg-white/10 px-2 py-1 rounded"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                          <p className="text-xs sm:text-sm text-gray-400 mb-2">
+                            {post.author} • {post.date} • {post.views} views
+                          </p>
+                        )}
+
+                        {/* TAGS */}
+                        <div className="flex flex-wrap gap-2">
+                          {post.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="text-xs bg-white/10 px-2 py-1 rounded"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </article>
