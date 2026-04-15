@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getPageViewsByUrl } from "@/lib/umami";
 
-export const revalidate = 300; // ⏱ cache for 5 minutes
+export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export async function GET() {
   try {
