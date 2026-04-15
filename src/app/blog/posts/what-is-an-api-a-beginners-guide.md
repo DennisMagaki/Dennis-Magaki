@@ -121,7 +121,7 @@ All operations use the same base URL for the resource `/books`, and the HTTP met
 ### Example Requests and Responses
 
 1. Get all books
-    - Request: `GET https://api.bookstore.com/books`
+    - Request: `GET https:// api.bookstore.com/books`
     - Response **(200 OK)**
     ```json
     [
@@ -140,7 +140,7 @@ All operations use the same base URL for the resource `/books`, and the HTTP met
     ]
     ```
 2. Create a new book
-    - Request: `POST https://api.bookstore.com/books`
+    - Request: `POST https:// api.bookstore.com/books`
     ```json
     {
       "title": "Dune",
@@ -161,7 +161,7 @@ All operations use the same base URL for the resource `/books`, and the HTTP met
     ]
     ```
 3. Delete a book
-    - Request: `DELETE https://api.bookstore.com/books/3`
+    - Request: `DELETE https:// api.bookstore.com/books/3`
     - Response **204 No Content (success, no body)**
 
 ---
