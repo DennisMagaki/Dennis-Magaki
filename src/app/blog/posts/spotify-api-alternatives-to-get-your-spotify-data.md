@@ -1,11 +1,13 @@
 ---
 title: "Spotify API Alternatives for your Spotify Data"
 date: "April 11, 2026"
-description: ""
+description: "How to retrieve your Spotify data without using Spotify API"
 image: "/blogs/spotify-api.jpg"
 tags: ["API", "Spotify", "Music Tech"]
 author: "Dennis Magaki"
 ---
+
+## Introduction
 
 Since late 2024, Spotify has implemented significant changes to its public Web API which have affected how many third-party developers interact with the API. These changes have elicited, not suprisingly, very strong reactions from non-supporters of these changes and supporters alike.
 

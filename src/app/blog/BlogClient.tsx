@@ -26,7 +26,7 @@ export default function BlogClient({ posts }: { posts: Post[] }) {
   const placeholderImage = "/placeholder-image.jpg";
 
   return (
-    <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-25 text-white font-montserrat">
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-25 text-white font-montserrat bg-black">
       {/* HEADER */}
       <div className="mb-8 md:mb-10">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">Blogs</h1>

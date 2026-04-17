@@ -63,7 +63,7 @@ export default async function Post({ params }: Props) {
     : null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-20 text-white font-montserrat">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-20 text-white font-montserrat bg-black">
       <MobileTOC toc={post.toc} />
       <div className="">
         {/* MAIN CONTENT */}

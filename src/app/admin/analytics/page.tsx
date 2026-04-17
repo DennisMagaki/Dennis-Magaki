@@ -66,7 +66,7 @@ export default async function AnalyticsPage({
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     )
-    .slice(0, 25);
+    .slice(0, 24);
 
   function formatTime(seconds: number) {
     const hrs = Math.floor(seconds / 3600);
