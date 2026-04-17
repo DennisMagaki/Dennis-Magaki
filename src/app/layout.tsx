@@ -60,7 +60,7 @@ export default function RootLayout({
     <html lang="en">
       <GoogleTagManager gtmId="G-FSJS9882K7" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased min-h-[100vh]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased min-h-[100vh] bg-black`}
       >
         <Analytics />
         <Navbar />
