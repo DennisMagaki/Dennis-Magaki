@@ -177,11 +177,22 @@ export default async function AnalyticsPage({
                   {sortedSessions.map((session, index) => {
                     const start = new Date(session.firstAt);
                     const end = new Date(session.lastAt);
-
+                    const hostname =
+                      session.hostname?.toLowerCase() || "";
+                    const isNonProdHost =
+                      hostname && hostname !== "dennis-magaki.is-a.dev";
+                    const isLocalhost =
+                      hostname.includes("localhost") ||
+                      hostname.includes("127.0.0.1");
+                    const rowHighlight = isLocalhost
+                      ? "bg-red-500/10"
+                      : isNonProdHost
+                        ? "bg-yellow-500/10"
+                        : "";
                     return (
                       <tr
                         key={`${session.id}-${session.createdAt}`}
-                        className="border-b border-white/5 hover:bg-white/5 transition"
+                        className={`border-b border-white/5 hover:bg-white/5 transition ${rowHighlight}`}
                       >
                         {/* VISITOR */}
                         <td className="py-2 text-white">

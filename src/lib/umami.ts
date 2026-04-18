@@ -39,6 +39,7 @@ type SessionItem = {
   createdAt: number;
   visits: number;
   views: number;
+  hostname?: string;
 };
 
 type PageViewsResponse = {
