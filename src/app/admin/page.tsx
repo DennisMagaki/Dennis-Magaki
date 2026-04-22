@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaEnvelope, FaChartLine } from "react-icons/fa";
+import { FaEnvelope, FaChartLine, FaFileExport } from "react-icons/fa";
 
 type Track = {
   name: string;
@@ -105,6 +105,14 @@ export default function AdminHome() {
               description="Traffic, sessions & performance"
               color="purple"
               icon={<FaChartLine size={24} />}
+            />
+          </Link>
+          <Link href="/admin/converter">
+            <Card
+              title="Converter"
+              description="Paste raw rankings text → Convert to JSON"
+              color="purple"
+              icon={<FaFileExport size={24} />}
             />
           </Link>
         </div>
