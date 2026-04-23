@@ -14,9 +14,12 @@ import Link from "next/link";
 export default async function AnalyticsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ range?: string }>;
+  searchParams: Promise<{ range?: string; site?: string }>;
 }) {
-  const websiteId = process.env.UMAMI_WEBSITE_ID!;
+  const websites = {
+    portfolio: process.env.UMAMI_PORTFOLIO_WEBSITE_ID!,
+    rankings: process.env.UMAMI_RANKINGS_WEBSITE_ID!,
+  };
   const endAt = Date.now();
 
   const ranges: Record<string, number | null> = {
@@ -25,11 +28,16 @@ export default async function AnalyticsPage({
     "30d": 30 * 24 * 60 * 60 * 1000,
     all: null,
   };
+  const params = await searchParams;
 
-  const selectedRange = (await searchParams).range || "30d";
-  const rangeMs = ranges[selectedRange as keyof typeof ranges];
+const selectedSite = params.site || "portfolio";
+const selectedRange = params.range || "24h";
+
+const rangeMs = ranges[selectedRange] ?? ranges["24h"];
 
   const startAt = rangeMs != null ? endAt - rangeMs : 0;
+
+  const websiteId = websites[selectedSite as keyof typeof websites];
 
   const [
     stats,
@@ -87,10 +95,25 @@ export default async function AnalyticsPage({
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
         <h1 className="text-lg md:text-3xl font-semibold">Analytics</h1>
         <div className="flex gap-2 text-sm">
+          <div className="flex gap-2 text-sm">
+            {["portfolio", "rankings"].map((site) => (
+              <Link
+                key={site}
+                href={`/admin/analytics?site=${site}&range=${selectedRange}`}
+                className={`px-3 py-1 rounded-md border ${
+                  selectedSite === site
+                    ? "bg-green-500 text-white border-green-500"
+                    : "border-white/20 text-gray-400"
+                }`}
+              >
+                {site}
+              </Link>
+            ))}
+          </div>
           {["24h", "7d", "30d", "all"].map((r) => (
             <Link
               key={r}
-              href={`/admin/analytics?range=${r}`}
+              href={`/admin/analytics?site=${selectedSite}&range=${r}`}
               className={`px-2 py-1 rounded-md border ${
                 selectedRange === r
                   ? "bg-blue-500 text-white border-blue-500"
@@ -177,13 +200,20 @@ export default async function AnalyticsPage({
                   {sortedSessions.map((session, index) => {
                     const start = new Date(session.firstAt);
                     const end = new Date(session.lastAt);
-                    const hostname =
-                      session.hostname?.toLowerCase() || "";
+                    const hostname = session.hostname?.toLowerCase() || "";
+
+                    const allowedHosts = [
+                      "dennis-magaki.is-a.dev",
+                      "tol-rankings.vercel.app",
+                    ];
+
                     const isNonProdHost =
-                      hostname && hostname !== "dennis-magaki.is-a.dev";
+                      hostname !== "" && !allowedHosts.includes(hostname);
+
                     const isLocalhost =
                       hostname.includes("localhost") ||
                       hostname.includes("127.0.0.1");
+
                     const rowHighlight = isLocalhost
                       ? "bg-red-500/10"
                       : isNonProdHost
