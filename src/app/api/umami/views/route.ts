@@ -6,7 +6,7 @@ export const revalidate = 300;
 
 export async function GET() {
   try {
-    const websiteId = process.env.UMAMI_WEBSITE_ID!;
+    const websiteId = process.env.UMAMI_PORTFOLIO_WEBSITE_ID!;
 
     const views = await getPageViewsByUrl(
       websiteId,
