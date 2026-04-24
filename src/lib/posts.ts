@@ -107,7 +107,7 @@ export async function getPostBySlug(slugName: string) {
     .process(content);
 
   // 👇 fetch views
-  const websiteId = process.env.UMAMI_WEBSITE_ID!;
+  const websiteId = process.env.UMAMI_PORTFOLIO_WEBSITE_ID!;
   const viewsMap = await getPageViewsByUrl(
     websiteId,
     0,
