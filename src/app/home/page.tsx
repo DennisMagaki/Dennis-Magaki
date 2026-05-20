@@ -76,7 +76,7 @@ export default function Home() {
 
               {/* 🔥 PDF VIEWER */}
               <iframe
-                src="/cv.pdf"
+                src="/dennis_magaki_cv.pdf"
                 className="w-full h-full"
               />
             </motion.div>
