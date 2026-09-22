@@ -61,6 +61,14 @@ const projects = [
     tags: ["Lovable", "React", "Tailwind CSS", "Vite", "Framer Motion"],
     image: "/images/taheeraa.png",
   },
+  {
+    url: "https://tol-rankings.vercel.app",
+    title: "TOL Rankings Website",
+    description:
+      "This is a niche website part of The Open League gaming community. Built with NextJS and Tailwind CSS, it features a clean, minimalistic design and responsive layout.",
+    tags: ["React", "Next.js", "Tailwind CSS", "Responsive Design"],
+    image: "/images/tol-rankings.jpeg",
+  },
 ];
 
 export default function Projects() {

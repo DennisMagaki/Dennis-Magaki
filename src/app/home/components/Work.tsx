@@ -52,12 +52,7 @@ export default function Work() {
           name: "Dukatech Solutions Corporate Website",
           description:
             "This is a proposed corporate website for Dukatech Solutions, a talent acquisition startup. Built with NextJS and Tailwind CSS, it features a clean design and responsive layout to showcase the company's portfolio. Built under attachment at Dukatech Solutions.",
-          tech: [
-            "React",
-            "Next.js",
-            "Tailwind CSS",
-            "Responsive Design",
-          ],
+          tech: ["React", "Next.js", "Tailwind CSS", "Responsive Design"],
           liveDemo: "https://dukatech.vercel.app",
           image: "/images/dukatech.jpeg",
         },
@@ -65,12 +60,7 @@ export default function Work() {
           name: "Harbor of Hope Rehabilitation Center Website",
           description:
             "This is a proposed website for Harbor of Hope Rehabilitation Center. Built with NextJS and Tailwind CSS, it features a design that speaks to the center's mission of providing compassionate care and support to individuals on their journey to recovery. Built under attachment at Dukatech Solutions.",
-          tech: [
-            "React",
-            "Next.js",
-            "Tailwind CSS",
-            "Responsive Design",
-          ],
+          tech: ["React", "Next.js", "Tailwind CSS", "Responsive Design"],
           liveDemo: "https://harbor-of-hope.vercel.app",
           image: "/images/harbor.png",
         },
@@ -78,14 +68,17 @@ export default function Work() {
           name: "Battuk and Arts Gallery Website",
           description:
             "This is a minimalistic art gallery website for Battuk and Arts. Built with NextJS and Tailwind CSS, it features a simple, minimalistic design that allows the artwork to take center stage. Built under attachment at Dukatech Solutions.",
-          tech: [
-            "React",
-            "Next.js",
-            "Tailwind CSS",
-            "Responsive Design",
-          ],
+          tech: ["React", "Next.js", "Tailwind CSS", "Responsive Design"],
           liveDemo: "https://batuk-peach.vercel.app",
           image: "/images/batuk.png",
+        },
+        {
+          name: "TOL Rankings Website",
+          description:
+            "This is a niche website part of The Open League gaming community. Built with NextJS and Tailwind CSS, it features a clean, minimalistic design and responsive layout.",
+          tech: ["React", "Next.js", "Tailwind CSS", "Responsive Design"],
+          liveDemo: "https://tol-rankings.vercel.app",
+          image: "/images/tol-rankings.jpg",
         },
       ],
     },
