@@ -19,7 +19,7 @@ const projects = [
     description:
       "Corporate website for a talent acquisition startup. Built with Next.js and Tailwind.",
     tags: ["Next.js", "React", "Tailwind CSS"],
-    image: "/images/dove.jpeg",
+    image: "/images/dukatech.png",
   },
   {
     url: "https://dove-print-solutions.vercel.app",
@@ -27,7 +27,7 @@ const projects = [
     description:
       "Corporate website for a design and branding cyber establishment. Frontend NextJs(React), TailwindCSS. DB/Auth - Firebase. Backend - NodeJs. Image Storage - Cloudinary. Deployment - Vercel.",
     tags: ["Next.js", "React", "Tailwind CSS", "Firebase", "Node.js", "Cloudinary"],
-    image: "/images/dukatech.png",
+    image: "/images/dove.jpeg",
   },
   {
     url: "https://shoecompany-dennis.vercel.app",
